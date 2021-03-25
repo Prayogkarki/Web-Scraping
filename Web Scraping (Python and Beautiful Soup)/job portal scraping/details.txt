@@ -1,0 +1,40 @@
+## education info 
+
+import bs4
+import requests
+import re
+from bs4 import BeautifulSoup
+
+educa=[]
+
+
+personal_url = 'https://www.kariyer.net/ozgecmis/ahmetcan81'
+
+response = requests.get(personal_url)
+html = response.content
+soup = BeautifulSoup(html, "html.parser")
+sobject_1 = soup.find('div', class_="resume-edit--education-info")
+sobject_2 = sobject_1.find('div', class_="resume-edit--box")
+sobject_3 = sobject_2.find('div', class_="container")
+sobject_4 = sobject_3.find_all('div', class_="university")
+#print(len(sobject_4))
+edu=[]
+temp=[]
+educations=[]
+for tmp_obj1 in sobject_4: 
+    
+    result7 = tmp_obj1.find('div', class_='fields col-13')
+    result8 = tmp_obj1.find('div', class_='row university-info')
+
+    for span in result8.find_all('span',class_=['field-content']):
+        edu.append(span.text)
+
+    temp=edu.copy()
+    edu.clear()
+    educations.append(temp)
+print(educations)
+
+
+    
+    
+
